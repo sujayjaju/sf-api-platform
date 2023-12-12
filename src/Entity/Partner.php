@@ -12,6 +12,7 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Controller\AddPartners;
 use App\Controller\FreshPartners;
+use App\Controller\UpdatePartner;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -28,6 +29,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
             ),
             new GetCollection(
                 uriTemplate: '/partners/join_after/{ts}',
+                uriVariables: [],
                 controller: FreshPartners::class,
                 openapiContext: [
                     'summary' => 'Retrieves the collection of Partner resources.',
@@ -73,6 +75,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
             ),
             new Post(
                 uriTemplate: '/partners/bulk/{active}',
+                uriVariables: [],
                 controller: AddPartners::class,
                 openapiContext: [
                     'consumes' => ['application/json'],
@@ -111,6 +114,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
                 ),
             ),
             new Put(),
+            new Patch(
+                uriTemplate: '/partners/{id}/active',
+                //uriVariables: ['id' => new Link(fromClass: self::class)],
+                controller: UpdatePartner::class,
+            ),
             new Patch(),
             new Delete(),
         ],
